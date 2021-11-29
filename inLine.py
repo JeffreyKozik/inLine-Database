@@ -64,6 +64,6 @@ def removeNextFromLine(service_name, business_phone_num):
     mycursor.execute(sql, val)
     mydb.commit()
 
-# removeNextFromLine("Dinner", "2167952355")
+removeNextFromLine("Dinner", "2167952355")
 
 print(mycursor.rowcount, "record inserted.")
