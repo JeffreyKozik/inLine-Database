@@ -1,5 +1,6 @@
 import mysql.connector
 import datetime
+import random
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -40,7 +41,7 @@ def getInLine(service_name, business_phone_num, customer_phone_num):
     people_in_line = mycursor.fetchone()[0]
     print(people_in_line)
     sql = "INSERT INTO inline (service_name, business_phone_num, customer_phone_num, position, minutes_left) VALUES (%s, %s, %s, %s, %s)"
-    val = (service_name, business_phone_num, customer_phone_num, int(people_in_line) + 1, int(people_in_line)*5)
+    val = (service_name, business_phone_num, customer_phone_num, int(people_in_line) + 1, 5 + int(people_in_line)*5)
     mycursor.execute(sql, val)
     mydb.commit()
 
@@ -52,7 +53,7 @@ def getOutOfLine(service_name, business_phone_num, customer_phone_num):
     mycursor.execute(sql)
     mydb.commit()
 
-# getOutOfLine("Dinner", "2167952355", "9782045866")
+# getOutOfLine("Dinner", "2167952355", "4404658021")
 
 def removeNextFromLine(service_name, business_phone_num):
     mycursor.execute("SELECT customer_phone_num FROM inline WHERE position = 1 AND business_phone_num = '" + business_phone_num + "'")
@@ -64,6 +65,62 @@ def removeNextFromLine(service_name, business_phone_num):
     mycursor.execute(sql, val)
     mydb.commit()
 
-removeNextFromLine("Dinner", "2167952355")
+# removeNextFromLine("Dinner", "2167952355")
 
-print(mycursor.rowcount, "record inserted.")
+def createManyBusinesses(n):
+    for i in range(n):
+        randomPhoneNum = ""
+        for j in range(10):
+            randomPhoneNum += str(random.randrange(0, 9))
+        randomZipCode = ""
+        for k in range(5):
+            randomZipCode += str(random.randrange(0,9))
+        firstWord = ["Amazing", "Wonderful", "Tasty", "Yummy", "Delicious", "Fantastic", "Quaint", "Superb", "Trendy", "Hidden"]
+        secondWord = ["Red", "Blue", "Orange", "Yellow", "Green", "Indigo", "Violet", "Pink", "Purple"]
+        thirdWord = ["Italian", "Mexican", "Chinese", "Japanese", "American", "French", "Middle Eastern", "Russian", "Australian", "African"]
+        fourthWord = ["Restaurant", "Bakery", "Breakfast Place", "Lunch Place", "Dinner Place"]
+        randomName = random.choice(firstWord) + " " + random.choice(secondWord) + " " + random.choice(thirdWord) + " " + random.choice(fourthWord)
+        createBusiness(randomPhoneNum, None, randomName, randomZipCode)
+        # services = ["Outside", "Inside"]
+        # service = random.choice(services)
+        # createService(randomPhoneNum, service)
+
+# createManyBusinesses(100)
+
+def createManyCustomers(n):
+    for i in range(n):
+        randomPhoneNum = ""
+        for j in range(10):
+            randomPhoneNum += str(random.randrange(0, 9))
+        randomZipCode = ""
+        for k in range(5):
+            randomZipCode += str(random.randrange(0,9))
+        firstWord = ["Jeff", "Joshua", "Niki", "Remy", "Jasper", "Mike", "Nick", "Skye", "Simmons"]
+        secondWord = ["Fitz", "Coulson", "Triplett", "Ward", "Nicholas", "George", "Amy"]
+        thirdWord = ["Smith", "Johnson", "White", "Kozik", "Wang", "Love", "Garland", "Rubio", "Sexton"]
+        randomName = random.choice(firstWord) + " " + random.choice(secondWord) + " " + random.choice(thirdWord)
+        createCustomer(randomPhoneNum, None, randomName, randomZipCode)
+
+# createManyCustomers(100)
+
+# def getManyPeopleInLine(n):
+#     mycursor.execute("SELECT phone_num FROM customers")
+#     allCustomers = mycursor.fetchall()
+#     for i in range(n):
+#         getInLine(random.choice(allCustomers), )
+
+def getBusinessesInZipcode(zipcode):
+    mycursor.execute("SELECT * FROM businesses WHERE zipcode = " + str(zipcode))
+    thisCustomerPhoneNum = mycursor.fetchall()
+    print(thisCustomerPhoneNum)
+
+# getBusinessesInZipcode(24145)
+
+def getCustomersInZipcode(zipcode):
+    mycursor.execute("SELECT * FROM customers WHERE zipcode = " + str(zipcode))
+    thisCustomerPhoneNum = mycursor.fetchall()
+    print(thisCustomerPhoneNum)
+
+# getCustomersInZipcode(26164)
+
+# print(mycursor.rowcount, "record inserted.")
