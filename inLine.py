@@ -49,7 +49,13 @@ def getInLine(service_name, business_phone_num, customer_phone_num):
 # getInLine("Dinner", "2167952355", "9782045866")
 
 def getOutOfLine(service_name, business_phone_num, customer_phone_num):
+    sql = "SELECT position FROM inline WHERE customer_phone_num = '" + customer_phone_num + "' AND business_phone_num = '" + business_phone_num + "'" + " AND service_name = '" + service_name + "'"
+    mycursor.execute(sql)
+    thisCustomerPosition = mycursor.fetchone()[0]
     sql = "DELETE FROM inline WHERE customer_phone_num = '" + customer_phone_num + "' AND business_phone_num = '" + business_phone_num + "'" + " AND service_name = '" + service_name + "'"
+    mycursor.execute(sql)
+    mydb.commit()
+    sql = "UPDATE inLine SET position = position - 1, minutes_left = minutes_left - 5 WHERE position > " + str(thisCustomerPosition)
     mycursor.execute(sql)
     mydb.commit()
 
@@ -63,9 +69,11 @@ def removeNextFromLine(service_name, business_phone_num):
     sql = "INSERT INTO visits (customer_phone_num, business_phone_num, visit_date) VALUES (%s, %s, %s)"
     val = (thisCustomerPhoneNum, business_phone_num, datetime.datetime.now())
     mycursor.execute(sql, val)
+    sql = "UPDATE inLine SET position = position - 1, minutes_left = minutes_left - 5"
+    mycursor.execute(sql)
     mydb.commit()
 
-# removeNextFromLine("Dinner", "2167952355")
+removeNextFromLine("Dinner", "2167952355")
 
 def createManyBusinesses(n):
     for i in range(n):
