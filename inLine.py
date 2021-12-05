@@ -37,7 +37,7 @@ def createService(service_name, business_phone_num):
 # createService("Dinner", "2167952355")
 
 def getInLine(service_name, business_phone_num, customer_phone_num):
-    mycursor.execute("SELECT count(*) FROM inline WHERE business_phone_num = " + business_phone_num + "AND service_name = " + service_name)
+    mycursor.execute("SELECT count(*) FROM inline WHERE business_phone_num = '" + business_phone_num + "' AND service_name = '" + service_name + "'")
     people_in_line = mycursor.fetchone()[0]
     print(people_in_line)
     sql = "INSERT INTO inline (service_name, business_phone_num, customer_phone_num, position, minutes_left) VALUES (%s, %s, %s, %s, %s)"
@@ -49,16 +49,16 @@ def getInLine(service_name, business_phone_num, customer_phone_num):
 # getInLine("Dinner", "2167952355", "9782045866")
 
 def getOutOfLine(service_name, business_phone_num, customer_phone_num):
-    sql = "DELETE FROM inline WHERE customer_phone_num = '" + customer_phone_num + "' AND business_phone_num = '" + business_phone_num + "'"
+    sql = "DELETE FROM inline WHERE customer_phone_num = '" + customer_phone_num + "' AND business_phone_num = '" + business_phone_num + "'" + " AND service_name = '" + service_name + "'"
     mycursor.execute(sql)
     mydb.commit()
 
 # getOutOfLine("Dinner", "2167952355", "4404658021")
 
 def removeNextFromLine(service_name, business_phone_num):
-    mycursor.execute("SELECT customer_phone_num FROM inline WHERE position = 1 AND business_phone_num = '" + business_phone_num + "'")
+    mycursor.execute("SELECT customer_phone_num FROM inline WHERE position = 1 AND business_phone_num = '" + business_phone_num + "'" + " AND service_name = '" + service_name + "'")
     thisCustomerPhoneNum = mycursor.fetchone()[0]
-    sql = "DELETE FROM inline WHERE position = 1 AND business_phone_num = '" + business_phone_num + "'"
+    sql = "DELETE FROM inline WHERE position = 1 AND business_phone_num = '" + business_phone_num + "'" + " AND service_name = '" + service_name + "'"
     mycursor.execute(sql)
     sql = "INSERT INTO visits (customer_phone_num, business_phone_num, visit_date) VALUES (%s, %s, %s)"
     val = (thisCustomerPhoneNum, business_phone_num, datetime.datetime.now())
