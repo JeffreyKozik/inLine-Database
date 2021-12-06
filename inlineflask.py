@@ -32,7 +32,8 @@ def customer():
         print('name', request.form.get('name'))
         print('zipcode', request.form.get('zipcode'))
         inLine.createCustomer(request.form.get('phone_num'), request.form.get('email'), request.form.get('name'), request.form.get('zipcode'))
-        return render_template("user.html", phone_num = request.form.get('phone_num'), email = request.form.get('email'), name = request.form.get('name'), zipcode = request.form.get('zipcode'))
+        mydb.commit()
+        return render_template("customer.html", phone_num = request.form.get('phone_num'), email = request.form.get('email'), name = request.form.get('name'), zipcode = request.form.get('zipcode'))
     else:
         mycursor.execute("SELECT email, name, zipcode FROM Customers WHERE phone_num = '" + request.form.get('signinphonenum') + "'")
         all = mycursor.fetchone()
@@ -43,7 +44,7 @@ def customer():
         print("email", email)
         print("name", name)
         print("zipcode", zipcode)
-        return render_template("user.html", phone_num = request.form.get('signinphonenum'), email = email, name = name, zipcode = zipcode)
+        return render_template("customer.html", phone_num = request.form.get('signinphonenum'), email = email, name = name, zipcode = zipcode)
 
 @app.route("/business", methods=['POST', 'GET'])
 def business():
@@ -53,6 +54,7 @@ def business():
         print('name', request.form.get('businessName'))
         print('zipcode', request.form.get('businessZipcode'))
         inLine.createBusiness(request.form.get('businessPhoneNumber'), request.form.get('businessEmail'), request.form.get('businessName'), request.form.get('businessZipcode'))
+        mydb.commit()
         return render_template("business.html", phone_num = request.form.get('businessPhoneNumber'), email = request.form.get('businessEmail'), name = request.form.get('businessName'), zipcode = request.form.get('businessZipcode'))
     else:
         mycursor.execute("SELECT email, name, zipcode FROM Businesses WHERE phone_num = '" + request.form.get('signinBusinessPhoneNum') + "'")
