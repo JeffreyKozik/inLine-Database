@@ -73,7 +73,7 @@ def removeNextFromLine(service_name, business_phone_num):
     mycursor.execute(sql)
     mydb.commit()
 
-removeNextFromLine("Dinner", "2167952355")
+# removeNextFromLine("Dinner", "2167952355")
 
 def createManyBusinesses(n):
     for i in range(n):

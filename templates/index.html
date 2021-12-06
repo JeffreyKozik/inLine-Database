@@ -2,39 +2,39 @@
 <html>
     <body>
         <h1> Sign Up as a Customer </h1>
-        <form action="/user">
+        <form action="/customer" method = "POST">
             <label for="email"> Email </label>
-            <input type="text" id="email" required>
-            <label for="phoneNumber"> Phone Number </label>
-            <input type="text" id="phoneNumber">
+            <input type="text" name="email" required>
+            <label for="phone_num"> Phone Number </label>
+            <input type="text" name="phone_num">
             <label for="name"> Name </label>
-            <input type="text" id="name">
+            <input type="text" name="name">
             <label for="zipcode"> Zipcode </label>
-            <input type="text" id="zipcode">
+            <input type="text" name="zipcode">
             <button type="submit">Sign Up</button>
         </form>
         <h1> Sign In as a Customer </h1>
-        <form >
-            <label for="signinEmail"> Email </label>
-            <input type="text" id="signinEmail" required>
+        <form action="/customer" method = "POST">
+            <label for="signinphonenum"> Phone Number </label>
+            <input type="text" name="signinphonenum" required>
             <button type="submit">Sign In</button>
         </form>
         <h1> Sign Up as a Business </h1>
-        <form >
+        <form action="/business" method = "POST">
             <label for="businessEmail"> Business Email </label>
-            <input type="text" id="businessEmail" required>
+            <input type="text" name="businessEmail" required>
             <label for="businessPhoneNumber"> Business Phone Number </label>
-            <input type="text" id="businessPhoneNumber">
+            <input type="text" name="businessPhoneNumber">
             <label for="businessName"> Business Name </label>
-            <input type="text" id="businessName">
+            <input type="text" name="businessName">
             <label for="businessZipcode"> Business Zipcode </label>
-            <input type="text" id="businessZipcode">
+            <input type="text" name="businessZipcode">
             <button type="submit">Sign Up</button>
         </form>
         <h1> Sign In as a Business </h1>
-        <form>
-            <label for="signinBusinessEmail"> Business Email </label>
-            <input type="text" id="signinBusinessEmail" required>
+        <form action="/business" method = "POST">
+            <label for="signinBusinessPhoneNum"> Business Phone Number </label>
+            <input type="text" name="signinBusinessPhoneNum" required>
             <button type="submit">Sign In</button>
         </form>
     </body>

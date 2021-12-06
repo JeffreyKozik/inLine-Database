@@ -1,0 +1,15 @@
+<!DOCTYPE hmtl>
+<html>
+    <body>
+        <h1> Phone Number: {{phone_num}} </h1>
+        <h1> Email: {{email}} </h1>
+        <h1> Name: {{name}} </h1>
+        <h1> Zipcode: {{zipcode}} </h1>
+        <h1> Create a Service </h1>
+        <form action="/service" method = "POST">
+            <label for="service"> Service Name </label>
+            <input type="text" name="service" required>
+            <button type="submit">Sign Up</button>
+        </form>
+    </body>
+</html>
